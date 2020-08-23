@@ -1,6 +1,8 @@
-# Optini.jl
+# Optini
 
-[![Build Status](https://travis-ci.com/lhnguyen-vn/Optini.jl.svg?branch=main)](https://travis-ci.com/lhnguyen-vn/Optini.jl)
-[![Build status](https://ci.appveyor.com/api/projects/status/904885r7lle943f0?svg=true)](https://ci.appveyor.com/project/lhnguyen-vn/optini-jl)
-[![Codecov](https://codecov.io/gh/lhnguyen-vn/Optini.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/lhnguyen-vn/Optini.jl)
-[![Coveralls](https://coveralls.io/repos/github/lhnguyen-vn/Optini.jl/badge.svg?branch=main)](https://coveralls.io/github/lhnguyen-vn/Optini.jl?branch=main)
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://lhnguyen-vn.github.io/Optini.jl/stable)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://lhnguyen-vn.github.io/Optini.jl/dev)
+[![Build Status](https://travis-ci.com/lhnguyen-vn/Optini.jl.svg?branch=master)](https://travis-ci.com/lhnguyen-vn/Optini.jl)
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/lhnguyen-vn/Optini.jl?svg=true)](https://ci.appveyor.com/project/lhnguyen-vn/Optini-jl)
+[![Coverage](https://codecov.io/gh/lhnguyen-vn/Optini.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/lhnguyen-vn/Optini.jl)
+[![Coverage](https://coveralls.io/repos/github/lhnguyen-vn/Optini.jl/badge.svg?branch=master)](https://coveralls.io/github/lhnguyen-vn/Optini.jl?branch=master)

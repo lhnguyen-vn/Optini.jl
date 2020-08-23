@@ -20,6 +20,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/lhnguyen-vn/Optini.jl",
+    repo="github.com/lhnguyen-vn/Optini.jl.git",
     devbranch = "main"
 )

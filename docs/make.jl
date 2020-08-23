@@ -1,3 +1,6 @@
+# Remove when package is registered
+push!(LOAD_PATH, "../src")
+
 using Optini
 using Documenter
 

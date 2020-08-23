@@ -21,4 +21,5 @@ makedocs(;
 
 deploydocs(;
     repo="github.com/lhnguyen-vn/Optini.jl",
+    devbranch = "main"
 )

@@ -1,0 +1,106 @@
+{
+    "telemetry.enableTelemetry": false,
+    "editor.rulers": [
+        92
+    ],
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "keyword.operator",
+                "settings": {
+                    "foreground": "#F92672",
+                    "fontStyle": ""
+                }
+            },
+            {
+                "scope": "keyword.control",
+                "settings": {
+                    "foreground": "#F92672",
+                    "fontStyle": ""
+                }
+            },
+            {
+                "scope": "keyword",
+                "settings": {
+                    "foreground": "#F92672",
+                    "fontStyle": ""
+                }
+            },
+            {
+                "scope": "keyword.other",
+                "settings": {
+                    "foreground": "#F92672",
+                    "fontStyle": ""
+                }
+            },
+            {
+                "scope": "string",
+                "settings": {
+                    "foreground": "#FD971F"
+                }
+            },
+            {
+                "scope": "entity.name.function",
+                "settings": {
+                    "foreground": "#66D9EF",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": "support.function",
+                "settings": {
+                    "foreground": "#A6E22E",
+                    "fontStyle": "italic"
+                }
+            },
+            {
+                "scope": "constant.numeric",
+                "settings": {
+                    "foreground": "#AF87FF"
+                }
+            },
+            {
+                "scope": "constant.language.julia",
+                "settings": {
+                    "foreground": "#AF87FF"
+                }
+            },
+            {
+                "scope": "comment",
+                "settings":{
+                    "foreground": "#5F5F87"
+                }
+            },
+            {
+                "scope": "support.type",
+                "settings": {
+                    "foreground": "#AF87FF",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": "constant.other.symbol.julia",
+                "settings": {
+                    "foreground": "#FD971F",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": "support.function.macro.julia",
+                "settings": {
+                    "foreground": "#A6E22E",
+                    "fontStyle": "italic bold"
+                }
+            },
+            {
+                "scope": "meta.type",
+                "settings": {
+                    "foreground": "#FF0000",
+                    "fontStyle": "bold"
+                }
+            }
+        ]
+    },
+    "julia.enableTelemetry": false,
+    "julia.execution.resultType": "inline"
+}

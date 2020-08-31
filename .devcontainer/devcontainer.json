@@ -1,0 +1,10 @@
+{
+    "name": "Optini GitHub Codespace",
+    "image": "julia:latest",
+    "extensions": [
+        "GitHub.vscode-pull-request-github",
+        "julialang.language-julia",
+        "MS-vsliveshare.vsliveshare",
+    ],
+    "postCreateCommand": "julia --project=. -e 'using Pkg; Pkg.instantiate();'"
+}

@@ -1,5 +1,7 @@
 module Optini
 
+using Zygote
+
 import MathOptInterface
 const MOI = MathOptInterface
 
@@ -8,15 +10,16 @@ import Base.MathConstants: φ
 # Generic method types
 include("types.jl")
 
-# Univariate optimizers
-include("univariate/types.jl")
-include("univariate/utils.jl")
-include("univariate/optimize.jl")
-include("univariate/algorithms/fibonacci.jl")
-include("univariate/algorithms/golden_section.jl")
-include("univariate/algorithms/quadratic_fit.jl")
+# bracketing optimizers
+include("bracketing/types.jl")
+include("bracketing/utils.jl")
+include("bracketing/optimize.jl")
+include("bracketing/algorithms/fibonacci.jl")
+include("bracketing/algorithms/golden_section.jl")
+include("bracketing/algorithms/quadratic_fit.jl")
+include("bracketing/algorithms/bisection.jl")
 
-export Fibonacci, GoldenSection, QuadraticFit
+export Fibonacci, GoldenSection, QuadraticFit, Bisection
 export optimize
 
 end

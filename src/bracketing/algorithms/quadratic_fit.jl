@@ -1,3 +1,10 @@
+"""
+    QuadraticFit <: BracketingAlgorithm
+
+The quadratic fit algorithm constructs a quadratic function from three points at each
+iteration as an approximation to the objective. The analytical solution to the quadratic 
+model is examined as the new minimizer candidate to update the three points. 
+"""
 struct QuadraticFit <: BracketingAlgorithm end
 
 function _optimize(f, lower, mid, upper, algorithm::QuadraticFit; rel_tol, abs_tol, max_iter)
@@ -12,9 +19,9 @@ function _optimize(f, lower, mid, upper, algorithm::QuadraticFit; rel_tol, abs_t
         x_tol = rel_tol * abs(x) + abs_tol
         mid_point = (lower + upper) / 2
         if abs(x - mid_point) <= 2x_tol - abs(upper - lower) / 2
-            return BracketingSolution(true, iter, x, yx)
+            return Solution(true, iter, x, yx)
         end
-        iter == max_iter && return BracketingSolution(false, iter, x, yx)
+        iter == max_iter && return Solution(false, iter, x, yx)
         iter += 1
         if x > mid
             if yx > y_mid

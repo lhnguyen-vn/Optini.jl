@@ -19,6 +19,17 @@ function _bracket(f, x, step, scale; max_iter)
     return nothing
 end
 
+"""
+    bracket(f::Function, x::T=0.0; kwargs...) where {T<:AbstractFloat}
+
+Create a bracket around a local minimum from the intial point `x`. Return the bracket in a 
+tuple if successful, and `nothing` otherwise. 
+
+# Keyword Arguments
+- `step=0.01`: the step size to expand the bracket
+- `scale=2.0`: the scale factor for step size at each iteration
+- `max_iter`: the maximum number of iterations
+"""
 function bracket(f::Function, x::T=0.0; 
         step=0.01, scale=2.0, max_iter::Integer=100, kwargs...) where {T<:AbstractFloat}
     _bracket(f, x, T(step), T(scale); max_iter)

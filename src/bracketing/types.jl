@@ -1,8 +1,6 @@
-abstract type BracketingAlgorithm <: AbstractAlgorithm end
+"""
+    BracketingAlgorithm
 
-struct BracketingSolution{Tx, Tf} <: AbstractSolution
-    converged::Bool
-    iter::Int
-    minimizer::Tx
-    minimum::Tf
-end
+Abstract supertype of bracketing algorithms for univariate optimization.
+"""
+abstract type BracketingAlgorithm <: AbstractAlgorithm end

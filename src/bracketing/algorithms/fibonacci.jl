@@ -1,3 +1,9 @@
+"""
+    Fibonacci <: BracketingAlgorithm
+
+The Fibonacci search algorithm optimize a univariate function by iteratively shrinking the 
+initial bracket around the minimum. The ratio is computed from the Fibonacci sequence.
+"""
 struct Fibonacci <: BracketingAlgorithm end
 
 function _optimize(f, lower, upper, algorithm::Fibonacci, ϵ; rel_tol, abs_tol, max_iter)
@@ -28,7 +34,7 @@ function _optimize(f, lower, upper, algorithm::Fibonacci, ϵ; rel_tol, abs_tol, 
         end
         p = 1 / (φ * (1 - s^(max_iter - iter + 2)) / (1 - s^(max_iter - iter + 1)))
     end
-    return BracketingSolution(converged, iter, x, yx)
+    return Solution(converged, iter, x, yx)
 end
 
 function _optimize(f, lower::T, upper::T, algorithm::Fibonacci; 

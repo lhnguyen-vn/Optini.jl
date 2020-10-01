@@ -1,3 +1,10 @@
+"""
+    Bisection <: BracketingAlgorithm
+
+Bisection search is a root-finding algorithm by maintainining a bracket of opposing 
+derivative signs. At each iteration the algorithm shrinks the bracket by half until a
+critical point is located or the bracket is sufficiently small. 
+"""
 struct Bisection <: BracketingAlgorithm end
 
 function _optimize(f, lower::T, upper::T, algorithm::Bisection; 
@@ -14,9 +21,9 @@ function _optimize(f, lower::T, upper::T, algorithm::Bisection;
         x_tol = rel_tol * abs(x) + abs_tol
         y = f′(x)
         if upper - lower <= x_tol || y == 0
-            return BracketingSolution(true, iter, x, f(x))
+            return Solution(true, iter, x, f(x))
         end
-        iter == max_iter && return BracketingSolution(false, iter, x, f(x))
+        iter == max_iter && return Solution(false, iter, x, f(x))
         iter += 1
         if sign(y) == sign(y_lower)
             lower = x

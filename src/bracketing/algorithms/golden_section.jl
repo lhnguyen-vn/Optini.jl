@@ -1,3 +1,10 @@
+"""
+    GoldenSection <: BracketingAlgorithm
+
+The golden section search algorithm optimize a univariate function by iteratively shrinking 
+the initial bracket around the minimum with the golden ratio as an approximation to the 
+Fibonacci sequence.
+"""
 struct GoldenSection <: BracketingAlgorithm end
 
 function _optimize(f, lower, upper, algorithm::GoldenSection; rel_tol, abs_tol, max_iter, kwargs...)
@@ -22,5 +29,5 @@ function _optimize(f, lower, upper, algorithm::GoldenSection; rel_tol, abs_tol, 
             lower, upper = new_x, lower
         end
     end
-    return BracketingSolution(converged, iter, x, yx)
+    return Solution(converged, iter, x, yx)
 end

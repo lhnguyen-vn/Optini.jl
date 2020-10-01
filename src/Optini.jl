@@ -7,10 +7,10 @@ const MOI = MathOptInterface
 
 import Base.MathConstants: φ
 
-# Generic method types
+# Generic types
 include("types.jl")
 
-# bracketing optimizers
+# Bracketing algorithms
 include("bracketing/types.jl")
 include("bracketing/utils.jl")
 include("bracketing/optimize.jl")
@@ -19,7 +19,7 @@ include("bracketing/algorithms/golden_section.jl")
 include("bracketing/algorithms/quadratic_fit.jl")
 include("bracketing/algorithms/bisection.jl")
 
-export Fibonacci, GoldenSection, QuadraticFit, Bisection
-export optimize
+export Bisection, Fibonacci, GoldenSection, QuadraticFit
+export bracket, optimize
 
 end

@@ -1,5 +1,6 @@
 module Optini
 
+using LinearAlgebra
 using Zygote
 
 import MathOptInterface
@@ -21,5 +22,9 @@ include("bracketing/algorithms/bisection.jl")
 
 export Bisection, Fibonacci, GoldenSection, QuadraticFit
 export bracket, optimize
+
+include("line_search/types.jl")
+include("first_order/types.jl")
+include("first_order/algorithms/gradient_descent.jl")
 
 end

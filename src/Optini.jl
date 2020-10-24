@@ -3,9 +3,6 @@ module Optini
 using LinearAlgebra
 using Zygote
 
-import MathOptInterface
-const MOI = MathOptInterface
-
 import Base.MathConstants: φ
 
 # Generic types

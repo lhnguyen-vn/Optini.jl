@@ -12,19 +12,34 @@ import Base.MathConstants: φ
 include("types.jl")
 
 # Bracketing algorithms
-include("bracketing/types.jl")
-include("bracketing/utils.jl")
-include("bracketing/optimize.jl")
-include("bracketing/algorithms/fibonacci.jl")
-include("bracketing/algorithms/golden_section.jl")
-include("bracketing/algorithms/quadratic_fit.jl")
-include("bracketing/algorithms/bisection.jl")
+include("univariate/algorithms/fibonacci.jl")
+include("univariate/algorithms/golden_section.jl")
+include("univariate/algorithms/quadratic_fit.jl")
+include("univariate/algorithms/bisection.jl")
+include("univariate/bracket.jl")
+include("univariate/optimize.jl")
 
-export Bisection, Fibonacci, GoldenSection, QuadraticFit
-export bracket, optimize
-
+# Line search methods
 include("line_search/types.jl")
-include("first_order/types.jl")
-include("first_order/algorithms/gradient_descent.jl")
+include("line_search/initial_step.jl")
+include("line_search/algorithms/static.jl")
+include("line_search/algorithms/exact.jl")
+include("line_search/algorithms/backtracking.jl")
+include("line_search/algorithms/interpolation.jl")
+include("line_search/algorithms/strong_wolfe.jl")
+
+# First order algorithms
+include("multivariate/first_order/types.jl")
+include("multivariate/first_order/algorithms/gradient_descent.jl")
+include("multivariate/optimize.jl")
+
+export bracket, optimize
+export Bisection, Fibonacci, GoldenSection, QuadraticFit
+
+export StaticInitial, PreviousDecreaseInitial, QuadraticInitial
+export StaticLineSearch, ExactLineSearch, BacktrackingLineSearch, InterpolationLineSearch,
+    StrongWolfeLineSearch
+
+export GradientDescent
 
 end

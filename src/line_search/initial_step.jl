@@ -89,7 +89,7 @@ end
 
 function (qi::QuadraticInitial{T})(state, p) where {T}
     prev_f = qi.prev_f[]
-    return isnan(prev_f) ? qi.α : T(2 * (state.f - qi.prev_f[]) / (state.∇f ⋅ p))
+    return isnan(prev_f) ? qi.α : min(T(1.01*2*(state.f-qi.prev_f[])/(state.∇f⋅p)), one(T))
 end
 
 function update!(qi::QuadraticInitial, state, p, α)

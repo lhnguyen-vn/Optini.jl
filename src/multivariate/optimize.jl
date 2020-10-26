@@ -3,7 +3,7 @@ function optimize(f::Function, g::Function, h::Function, x::Vector{T};
         abs_tol=1e-12, 
         max_iter::Integer=1_000_000, 
         save_trace::Bool=false,
-        callback=()->nothing where {T<:AbstractFloat}
+        callback=()->nothing) where {T<:AbstractFloat}
     reset!(alg)
     metadata = Dict()
     s = state(f, g, h, x, alg)

@@ -6,3 +6,5 @@
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/lhnguyen-vn/Optini.jl?svg=true)](https://ci.appveyor.com/project/lhnguyen-vn/Optini-jl)
 [![Coverage](https://codecov.io/gh/lhnguyen-vn/Optini.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/lhnguyen-vn/Optini.jl)
 [![Coverage](https://coveralls.io/repos/github/lhnguyen-vn/Optini.jl/badge.svg?branch=main)](https://coveralls.io/github/lhnguyen-vn/Optini.jl?branch=main)
+
+This repository is a numerical optimization package implemented for pedagogical purposes.

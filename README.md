@@ -7,4 +7,4 @@
 [![Coverage](https://codecov.io/gh/lhnguyen-vn/Optini.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/lhnguyen-vn/Optini.jl)
 [![Coverage](https://coveralls.io/repos/github/lhnguyen-vn/Optini.jl/badge.svg?branch=main)](https://coveralls.io/github/lhnguyen-vn/Optini.jl?branch=main)
 
-This repository is a numerical optimization package implemented for pedagogical purposes.
+This repository is a numerical optimization package implemented for pedagogical purposes. Main references include Nocedal & Wright's [*Numerical Optimization*](https://www.springer.com/gp/book/9780387303031) and Kochenderfer & Wheeler's [*Algorithms for Optimization*](https://mitpress.mit.edu/books/algorithms-optimization).

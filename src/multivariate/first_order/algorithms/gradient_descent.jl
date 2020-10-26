@@ -8,13 +8,13 @@
 """
 struct GradientDescent{T<:AbstractLineSearch} <: FirstOrderAlgorithm
     linesearch::T
-    
-    @doc """
-        GradientDescent([line_search=StaticLineSearch()])
-    
-    Initiate `GradientDescent` algorithm.
-    """
-    GradientDescent(linesearch=StaticLineSearch()) = new{typeof(linesearch)}(linesearch)
 end
+
+"""
+    GradientDescent(; linesearch=StaticLineSearch())
+
+Initiate `GradientDescent` algorithm.
+"""
+GradientDescent(; linesearch=StaticLineSearch) = GradientDescent(linesearch)
 
 (gd::GradientDescent)(state) = -state.∇f

@@ -43,6 +43,11 @@ function PreviousDecreaseInitial(α::T=1.0) where {T}
     return PreviousDecreaseInitial(α, Ref(T(NaN)))
 end
 
+function reset!(pdi::PreviousDecreaseInitial)
+    pdi.prev_decrease[] = NaN
+    return pdi
+end
+
 function (pdi::PreviousDecreaseInitial{T})(state, p) where {T}
     prev_decrease = pdi.prev_decrease[]
     return isnan(prev_decrease) ? pdi.α : T(prev_decrease / (state.∇f ⋅ p))
@@ -77,9 +82,14 @@ function QuadraticInitial(α::T=1.0) where {T}
     return QuadraticInitial(α, Ref(T(NaN)))
 end
 
+function reset!(qi::QuadraticInitial)
+    qi.prev_f[] = NaN
+    return qi
+end
+
 function (qi::QuadraticInitial{T})(state, p) where {T}
     prev_f = qi.prev_f[]
-    return isnan(prev_f) ? qi.α : T(2 * (state.f - qi.prev_f[]) / (state.∇f ⋅ p))
+    return isnan(prev_f) ? qi.α : min(T(1.01*2*(state.f-qi.prev_f[])/(state.∇f⋅p)), one(T))
 end
 
 function update!(qi::QuadraticInitial, state, p, α)

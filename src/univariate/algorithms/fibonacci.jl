@@ -29,12 +29,13 @@ function _optimize(f, lower::T, upper::T, alg::Fibonacci, ϵ;
     yx = f(x)
     converged = false
     iter = 1
-    while iter < max_iter
+    while true
         x_tol = rel_tol * abs(x) + abs_tol
         if abs(upper - lower) < 2x_tol
             converged = true
             break
         end
+        iter == max_iter && break
         iter += 1
         if iter == max_iter
             new_x = T(ϵ * upper + (1 - ϵ) * x)

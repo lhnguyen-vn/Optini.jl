@@ -14,12 +14,13 @@ function _optimize(f, lower::T, upper::T, alg::GoldenSection;
     yx = f(x)
     converged = false
     iter = 1
-    while iter < max_iter
+    while true
         x_tol = rel_tol * abs(x) + abs_tol
         if abs(upper - lower) < 2x_tol
             converged = true
             break
         end
+        iter == max_iter && break
         iter += 1
         new_x = T(p * upper + (1 - p) * lower)
         new_yx = f(new_x)

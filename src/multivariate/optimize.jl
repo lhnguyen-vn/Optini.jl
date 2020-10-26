@@ -2,7 +2,8 @@ function optimize(f::Function, g::Function, h::Function, x::Vector{T};
         alg::MultivariateAlgorithm, 
         abs_tol=1e-12, 
         max_iter::Integer=1_000_000, 
-        save_trace::Bool=false) where {T<:AbstractFloat}
+        save_trace::Bool=false,
+        callback=()->nothing where {T<:AbstractFloat}
     reset!(alg)
     metadata = Dict()
     s = state(f, g, h, x, alg)
@@ -16,6 +17,7 @@ function optimize(f::Function, g::Function, h::Function, x::Vector{T};
             break
         end
         (iter == max_iter || isinf(s.f)) && break
+        callback()
         iter += 1
         p = alg(s)
         α = alg.linesearch(f, s, p)

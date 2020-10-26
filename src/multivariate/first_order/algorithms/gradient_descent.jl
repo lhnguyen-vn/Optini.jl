@@ -15,6 +15,6 @@ end
 
 Initiate `GradientDescent` algorithm.
 """
-GradientDescent(; linesearch=StaticLineSearch) = GradientDescent(linesearch)
+GradientDescent(; linesearch=StaticLineSearch()) = GradientDescent(linesearch)
 
 (gd::GradientDescent)(state) = -state.∇f

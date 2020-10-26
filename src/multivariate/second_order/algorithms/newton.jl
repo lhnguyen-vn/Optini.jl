@@ -60,8 +60,9 @@ function (mi::MultipleIdentity)(∇²f::Matrix{T}) where T
     β = T(mi.β)
     ρ = T(mi.ρ)
     τ = -minimum(diag(∇²f)) + β
+    h = similar(∇²f)
     while true
-        h = ∇²f + τ*I
+        h .= ∇²f + τ*I
         isposdef(h) && return h
         τ = max(ρ*τ, β)
     end

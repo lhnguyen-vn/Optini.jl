@@ -39,6 +39,8 @@ function ExactLineSearch(;
     ExactLineSearch(alg, bracket_options, alg_options)
 end
 
+reset!(els::ExactLineSearch) = els
+
 function (els::ExactLineSearch)(f, state, p)
     ϕ(α) = f(state.x + α * p)
     br = bracket(ϕ; els.bracket_options...)

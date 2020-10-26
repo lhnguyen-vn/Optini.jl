@@ -43,6 +43,11 @@ function PreviousDecreaseInitial(α::T=1.0) where {T}
     return PreviousDecreaseInitial(α, Ref(T(NaN)))
 end
 
+function reset!(pdi::PreviousDecreaseInitial)
+    pdi.prev_decrease[] = NaN
+    return pdi
+end
+
 function (pdi::PreviousDecreaseInitial{T})(state, p) where {T}
     prev_decrease = pdi.prev_decrease[]
     return isnan(prev_decrease) ? pdi.α : T(prev_decrease / (state.∇f ⋅ p))
@@ -75,6 +80,11 @@ Initialize `QuadraticInitial`, with `prev_f` defaulting to `Ref(T(NaN))`.
 """
 function QuadraticInitial(α::T=1.0) where {T}
     return QuadraticInitial(α, Ref(T(NaN)))
+end
+
+function reset!(qi::QuadraticInitial)
+    qi.prev_f[] = NaN
+    return qi
 end
 
 function (qi::QuadraticInitial{T})(state, p) where {T}

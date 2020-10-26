@@ -9,10 +9,19 @@
 end
 
 @testset "Univariate Optimization" begin
-    f(x) = x ≤ 3 ? (x-2)^2 : 2*log(x-2) + 1
+    f(x) = x ≤ 3 ? (x-2.0)^2 : 2*log(x-2.0) + 1
     for alg in [Fibonacci(), GoldenSection(), Bisection(), QuadraticFit()]
-        sol = optimize(f, 0, 6; alg)
+        sol = optimize(f, 0f0, 6f0; alg, max_iter=40)
+        # Test convergence
         @test sol.converged
+        # Test result
         @test sol.minimizer ≈ 2
+        # Test type stability
+        @test typeof(sol.minimizer) == Float32
     end
+    # Test with integer input
+    sol = optimize(f, 0, 6; max_iter=40)
+    @test sol.converged
+    @test sol.minimizer ≈ 2
+    @test typeof(sol.minimizer) == Float64
 end

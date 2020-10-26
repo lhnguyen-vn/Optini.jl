@@ -4,10 +4,4 @@ struct FirstOrderState{Tx, Tf}
     ∇f::Vector{Tf}
 end
 
-function FirstOrderState(f, x)
-    fx, back = Zygote.pullback(f, x)
-    ∇fx = back(one(typeof(fx)))[1]
-    return FirstOrderState(x, fx, ∇fx)
-end
-
-state(f, x, alg::FirstOrderAlgorithm) = FirstOrderState(f, x)
+state(f, g, h, x, alg::FirstOrderAlgorithm) = FirstOrderState(x, f(x), g(x))

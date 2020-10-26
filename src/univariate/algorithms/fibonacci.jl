@@ -21,8 +21,9 @@ Wheeler's "Algorithms for Optimization" for more information.
 """
 Fibonacci(ϵ=0.01) = Fibonacci{typeof(ϵ)}(ϵ)
 
-function _optimize(f, lower::T, upper::T, alg::Fibonacci, ϵ; 
+function _optimize(f, lower::T, upper::T, alg::Fibonacci; 
         rel_tol, abs_tol, max_iter) where {T}
+    ϵ = T(alg.ϵ)
     s = (1 - √5) / (1 + √5)
     p = 1 / (φ * (1 - s^(max_iter + 1)) / (1 - s^max_iter))
     x = T(p * lower + (1 - p) * upper)
@@ -51,9 +52,4 @@ function _optimize(f, lower::T, upper::T, alg::Fibonacci, ϵ;
         p = 1 / (φ * (1 - s^(max_iter - iter + 2)) / (1 - s^(max_iter - iter + 1)))
     end
     return Solution(converged, iter, x, yx)
-end
-
-function _optimize(f, lower::T, upper::T, alg::Fibonacci; 
-        rel_tol, abs_tol, max_iter) where {T}
-    _optimize(f, lower, upper, alg, T(alg.ϵ); rel_tol, abs_tol, max_iter)
 end

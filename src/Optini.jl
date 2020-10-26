@@ -30,6 +30,10 @@ include("multivariate/first_order/types.jl")
 include("multivariate/first_order/algorithms/gradient_descent.jl")
 include("multivariate/optimize.jl")
 
+# Second order algorithms
+include("multivariate/second_order/types.jl")
+include("multivariate/second_order/algorithms/newton.jl")
+
 export bracket, optimize
 export Bisection, Fibonacci, GoldenSection, QuadraticFit
 
@@ -38,5 +42,7 @@ export StaticLineSearch, ExactLineSearch, BacktrackingLineSearch, InterpolationL
     StrongWolfeLineSearch
 
 export GradientDescent
+
+export Newton
 
 end

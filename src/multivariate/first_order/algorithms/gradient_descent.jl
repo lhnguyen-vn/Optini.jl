@@ -4,7 +4,7 @@
 `GradientDescent` uses steepest descent and line search to minimize the objective function.
 
 # Fields
--`linesearch::T`: line search method
+- `linesearch::T`: line search method
 """
 struct GradientDescent{T<:AbstractLineSearch} <: FirstOrderAlgorithm
     linesearch::T

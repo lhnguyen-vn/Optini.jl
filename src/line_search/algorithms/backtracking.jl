@@ -5,9 +5,9 @@
 until the Armijo sufficient decrease condition is met.
 
 # Fields
-`init::I`: the initial step length method
-`c::C`: the constant for the Armijo condition in the open interval (0, 1)
-`scale::T`: the scale factor to shrink the step length
+- `init::I`: the initial step length method
+- `c::C`: the constant for the Armijo condition in the open interval (0, 1)
+- `scale::T`: the scale factor to shrink the step length
 """
 struct BacktrackingLineSearch{I<:AbstractInitial, C, T} <: AbstractLineSearch
     init::I
@@ -26,9 +26,9 @@ end
 Initiate `BacktrackingLineSearch`.
 
 # Keywords
--`init=StaticInitial()`: the initial step length method
--`c=1e-4`: the constant for the Armijo condition in the open interval (0, 1)
--`scale=0.5`: the scale factor to shrink the step length
+- `init=StaticInitial()`: the initial step length method
+- `c=1e-4`: the constant for the Armijo condition in the open interval (0, 1)
+- `scale=0.5`: the scale factor to shrink the step length
 """
 function BacktrackingLineSearch(;
         init=StaticInitial(), 

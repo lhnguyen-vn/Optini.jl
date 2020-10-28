@@ -5,11 +5,11 @@
 decrease and the curvature conditions.
 
 # Fields
--`init::I`: initial step length method
--`c_1::C`: Armijo condition constant
--`c_2::C`: curvature condition constant
--`scale::S`: scale factor to expand step length bracket
--`α_max::T`: maximum step length
+- `init::I`: initial step length method
+- `c_1::C`: Armijo condition constant
+- `c_2::C`: curvature condition constant
+- `scale::S`: scale factor to expand step length bracket
+- `α_max::T`: maximum step length
 """
 struct StrongWolfeLineSearch{I<:AbstractInitial, C, S, T} <: AbstractLineSearch
     init::I
@@ -35,11 +35,11 @@ end
 Initiate `StrongWolfeLineSearch`.
 
 # Keywords
--`init=StaticInitial()`: initial step length method
--`c_1=1e-4`: Armijo condition constant
--`c_2=0.9: curvature condition constant
--`scale=2.0`: scale factor to expand step length bracket
--`α_max=100_000`: maximum step length
+- `init=StaticInitial()`: initial step length method
+- `c_1=1e-4`: Armijo condition constant
+- `c_2=0.9: curvature condition constant
+- `scale=2.0`: scale factor to expand step length bracket
+- `α_max=100_000`: maximum step length
 """
 function StrongWolfeLineSearch(;
         init=StaticInitial(),

@@ -5,9 +5,9 @@
 satisfying the Armijo sufficient decrease condition.
 
 # Fields
--`init::I`: the initial step length method
--`c::C`: the constant for the Armijo condition in the open interval (0, 1)
--`ϵ::T`: the minimum step length decrease from the initial step length
+- `init::I`: the initial step length method
+- `c::C`: the constant for the Armijo condition in the open interval (0, 1)
+- `ϵ::T`: the minimum step length decrease from the initial step length
 """
 struct InterpolationLineSearch{I<:AbstractInitial, C, T} <: AbstractLineSearch
     init::I
@@ -29,9 +29,9 @@ end
 Initiate `InterpolationLineSearch`.
 
 # Keywords
--`init=StaticInitial()`: the initial step length method
--`c=1e-4`: the constant for the Armijo condition in the open interval (0, 1)
--`ϵ=1e-6`: the minimum step length decrease from the initial step length
+- `init=StaticInitial()`: the initial step length method
+- `c=1e-4`: the constant for the Armijo condition in the open interval (0, 1)
+- `ϵ=1e-6`: the minimum step length decrease from the initial step length
 """
 function InterpolationLineSearch(; init=StaticInitial(), c=1e-4, ϵ=1e-6)
     InterpolationLineSearch(init, c, ϵ)

@@ -4,8 +4,8 @@
 `Newton` method uses the Newton direction and line search to minimize the objective.
 
 # Fields
--`linesearch::LS`: line search method
--`modify::M`: the Hessian modification method to enforce positive definiteness
+- `linesearch::LS`: line search method
+- `modify::M`: the Hessian modification method to enforce positive definiteness
 """
 struct Newton{LS<:AbstractLineSearch, M} <: SecondOrderAlgorithm
     linesearch::LS
@@ -35,8 +35,8 @@ Modify the Hessian by adding some multiples, τ, of the identity matrix, as desc
 Nocedal and Wright's Numerical Optimization.
 
 # Fields
--`β::T1`: constant to compute appropriate τ
--`ρ::T2`: scale factor to expand τ
+- `β::T1`: constant to compute appropriate τ
+- `ρ::T2`: scale factor to expand τ
 """
 struct MultipleIdentity{T1, T2}
     β::T1

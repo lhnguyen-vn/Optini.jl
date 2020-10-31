@@ -11,13 +11,13 @@ function optimize(f::Function, g::Function, h::Function, x::Vector{T};
     converged = false
     iter = 0
     while iter <= max_iter
+        callback()
         save_trace && push!(t, s)
         if norm(s.∇f) < abs_tol
             converged = true
             break
         end
         (iter == max_iter || isinf(s.f)) && break
-        callback()
         iter += 1
         p = alg(s)
         α = alg.linesearch(f, s, p)

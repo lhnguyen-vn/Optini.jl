@@ -5,29 +5,28 @@ function optimize(f::Function, g::Function, h::Function, x::Vector{T};
         save_trace::Bool=false,
         callback=()->nothing) where {T<:AbstractFloat}
     reset!(alg)
-    metadata = Dict()
-    s = state(f, g, h, x, alg)
-    t = typeof(s)[]
+    metadata = Dict{Symbol, Any}()
+    curr_state = state(order(alg), f, g, h, x)
+    trace = typeof(curr_state)[]
     converged = false
     iter = 0
     while iter <= max_iter
         callback()
-        save_trace && push!(t, s)
-        if norm(s.∇f) < abs_tol
+        if save_trace
+            push!(trace, curr_state)
+            x = copy(x)
+        end
+        if norm(curr_state.∇f) < abs_tol
             converged = true
             break
         end
-        (iter == max_iter || isinf(s.f)) && break
+        (iter == max_iter || isinf(curr_state.f)) && break
         iter += 1
-        p = alg(s)
-        α = alg.linesearch(f, s, p)
-        update!(alg, s, p, α)
-        step = convert(typeof(x), α*p)
-        x += step
-        s = state(f, g, h, x, alg)
+        step!(x, alg, f, curr_state)
+        curr_state = state(order(alg), f, g, h, x)
     end
-    save_trace && (metadata[:trace] = t)
-    return Solution(converged, iter, s.x, s.f, metadata)
+    save_trace && (metadata[:trace] = trace)
+    return Solution(converged, iter, curr_state.x, curr_state.f, metadata)
 end
 
 function optimize(f::Function, g::Function, x; kwargs...)
@@ -39,14 +38,4 @@ function optimize(f::Function, x; kwargs...)
     g = x -> Zygote.gradient(f, x)[1]
     h = x -> Zygote.hessian(f, x)
     return optimize(f, g, h, x; kwargs...)
-end
-
-function reset!(alg::MultivariateAlgorithm)
-    reset!(alg.linesearch)
-    return alg
-end
-
-function update!(alg::MultivariateAlgorithm, state, p, α)
-    update!(alg.linesearch, state, p, α)
-    return alg
 end

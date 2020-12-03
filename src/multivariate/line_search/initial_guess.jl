@@ -45,7 +45,7 @@ end
 
 function reset!(pdi::PreviousDecreaseInitial)
     pdi.prev_decrease[] = NaN
-    return pdi
+    return nothing
 end
 
 function (pdi::PreviousDecreaseInitial{T})(state, p) where {T}
@@ -55,7 +55,7 @@ end
 
 function update!(pdi::PreviousDecreaseInitial, state, p, α)
     pdi.prev_decrease[] = α * (state.∇f ⋅ p)
-    return pdi
+    return nothing
 end
 
 """
@@ -84,7 +84,7 @@ end
 
 function reset!(qi::QuadraticInitial)
     qi.prev_f[] = NaN
-    return qi
+    return nothing
 end
 
 function (qi::QuadraticInitial{T})(state, p) where {T}
@@ -94,5 +94,5 @@ end
 
 function update!(qi::QuadraticInitial, state, p, α)
     qi.prev_f[] = state.f
-    return qi
+    return nothing
 end

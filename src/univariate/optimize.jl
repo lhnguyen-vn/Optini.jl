@@ -22,4 +22,3 @@ function optimize(f::Function, lower::Real, upper::Real; kwargs...)
     T = promote_type(typeof(lower/1), typeof(upper/1))
     optimize(f, T(lower), T(upper); kwargs...)
 end
-

@@ -1,30 +1,27 @@
 """
-    Newton{LS<:AbstractLineSearch, M} <: SecondOrderAlgorithm
+    Newton{M}
 
-`Newton` method uses the Newton direction and line search to minimize the objective.
+`Newton` dispatches to the Newton direction for `LineSearch` algorithm and uses the Hessian 
+in `TrustRegion` models.
 
 # Fields
-- `linesearch::LS`: line search method
 - `modify::M`: the Hessian modification method to enforce positive definiteness
 """
-struct Newton{LS<:AbstractLineSearch, M} <: SecondOrderAlgorithm
-    linesearch::LS
+struct Newton{M}
     modify::M
 end
 
-"""
-    Newton(; linesearch=StaticLineSearch(), modify=MultipleIdentity())
+order(::Newton) = SecondOrder()
 
-Initiate `Newton` algorithm.
-"""
-function Newton(; linesearch=StaticLineSearch(), modify=MultipleIdentity())
-    return Newton(linesearch, modify)
+function approx_hessian(n::Newton, state)
+    ∇²f = state.∇²f
+    isposdef(∇²f) && return ∇²f
+    return modify(∇²f)
 end
 
-function (n::Newton)(state)
+function direction(n::Newton, state)
     ∇f = state.∇f
-    ∇²f = state.∇²f
-    isposdef(∇²f) || (∇²f = n.modify(∇²f))
+    ∇²f = approx_hessian(n::Newton, state)
     return -inv(∇²f) * ∇f
 end
 
@@ -62,7 +59,7 @@ function (mi::MultipleIdentity)(∇²f::Matrix{T}) where T
     τ = -minimum(diag(∇²f)) + β
     h = similar(∇²f)
     while true
-        h .= ∇²f + τ*I
+        @. h = ∇²f + τ*I
         isposdef(h) && return h
         τ = max(ρ*τ, β)
     end

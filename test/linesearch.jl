@@ -50,13 +50,4 @@ let
             end
         end
     end
-
-    @testset "Line Search Algorithms" begin
-        directions = [Steepest(), Newton()]
-        methods = [InterpolationLineSearch(), StrongWolfeLineSearch()]
-
-        for direction in directions, method in methods
-            ls = LineSearch()
-        end
-    end
 end

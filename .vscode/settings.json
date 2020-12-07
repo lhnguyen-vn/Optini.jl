@@ -102,5 +102,6 @@
         ]
     },
     "julia.enableTelemetry": false,
-    "julia.execution.resultType": "inline"
+    "julia.execution.resultType": "inline",
+    "julia.environmentPath": "/root/workspace/Optini.jl"
 }

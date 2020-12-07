@@ -13,7 +13,7 @@ function (tds::TwoDimSubspace)(state, B, Δ)
 
     if (norm_p2 ≤ Δ) || (norm_p2 ≈ Δ) # analytical solution
         p .= -p2
-    else if prod * inv_prod ≈ norm_∇f^4 # fall back to Cauchy Point
+    elseif prod * inv_prod ≈ norm_∇f^4 # fall back to Cauchy Point
         _cauchypoint!(p, Δ, ∇f, norm_∇f, prod)
     else # solve constrained two-dimensional problem
         a = norm_∇f^2
@@ -23,7 +23,7 @@ function (tds::TwoDimSubspace)(state, B, Δ)
         B̃ = [c a; a d]
         g̃ = [a; d]
         B̄ = [a d; d b]
-        poly = λ -> (b - Δ^2)*(a^2 - c*d)^2 -
+        poly(λ) = (b - Δ^2)*(a^2 - c*d)^2 -
             2*(a^2 - c*d)*(Δ^2*a*d - Δ^2*b*c + a*b*d - d^3)*λ +
             (2*Δ^2*a^3*b - 3*Δ^2*a^2*d^2 - Δ^2*b^2*c^2 + 2*Δ^2*c*d^3 + a^3*b^2 - 2*a^2*b*d^2 + a*d^4)*λ^2 +
             2*Δ^2*(a*b - d^2)*(a*d - b*c)*λ^3 -
@@ -36,12 +36,14 @@ function (tds::TwoDimSubspace)(state, B, Δ)
 end
 
 function _positive_root(poly)
-    step = 0.01
+    λ = step = 0.01
     scale = 2.0
-    λ = step
     while poly(λ) > 0
         step *= scale
         λ += step
     end
-    optimize(poly, 0.0, λ; alg=Bisection())
+    sol = _optimize(λ -> nothing, poly, 0.0, λ, Bisection();
+        reltol=sqrt(eps(Float64)), abstol=eps(Float64), maxiter=1_000)
+    sol.converged || error("Failed to solve fourth degree polynomial")
+    return sol.minimizer
 end

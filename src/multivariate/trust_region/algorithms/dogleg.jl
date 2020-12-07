@@ -12,11 +12,12 @@ function (dl::Dogleg)(state, B, Δ)
     else
         isposdef(B) || error("Dogleg method only works for positive definite B")
         pᴮ = -inv(B)*∇f
-        if Δ ≥ pᴮ
+        norm_pᴮ = norm(pᴮ)
+        if Δ ≥ norm_pᴮ
             p .= pᴮ
         else
             pᴮpᶜ = pᴮ⋅pᶜ
-            norm_pᴮ = norm(pᴮ)
+            norm_pᴮ = norm_pᴮ
             r = (norm_pᴮ^2 - pᴮpᶜ) / (norm_pᶜ^2 + norm_pᴮ^2 - 2pᴮpᶜ)
             @. p = r*pᶜ + (1-r)*pᴮ
         end

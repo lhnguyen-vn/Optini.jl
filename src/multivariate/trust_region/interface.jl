@@ -9,10 +9,9 @@ function step!(x, alg::TrustRegion, f::Function, state)
     fx = state.f
     ∇fx = state.∇f
     B = approx_hessian(alg.hessian, state)
-    model =  x -> fx + ∇fx⋅x + (x'*B*x)/2
+    model(p) = fx + ∇fx⋅p + (p'*B*p)/2
     p = alg.method(state, B, Δ)
-    new_x = x + p
-    ρ = (fx - f(new_x)) / (model(x) - model(new_x))
+    ρ = (fx - f(x + p)) / (model(zero(p)) - model(p))
     
     # Update radius
     if ρ < 0.25
@@ -25,6 +24,6 @@ function step!(x, alg::TrustRegion, f::Function, state)
 
     # Apply step
     if ρ > η
-        x .= new_x
+        x .+= p 
     end
 end

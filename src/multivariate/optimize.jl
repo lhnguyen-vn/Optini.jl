@@ -1,31 +1,32 @@
-function optimize(f::Function, g::Function, h::Function, x::Vector{T};
+function optimize(f::Function, g::Function, h::Function, x::AbstractVector{T};
         alg::MultivariateAlgorithm, 
-        abs_tol=1e-12, 
-        max_iter::Integer=1_000_000, 
-        save_trace::Bool=false,
+        abstol=1e-12, 
+        maxiter::Integer=1_000_000, 
+        savetrace::Bool=false,
         callback=()->nothing) where {T<:AbstractFloat}
     reset!(alg)
+    x = copy(x)
     metadata = Dict{Symbol, Any}()
     curr_state = state(order(alg), f, g, h, x)
     trace = typeof(curr_state)[]
     converged = false
     iter = 0
-    while iter <= max_iter
+    while iter <= maxiter
         callback()
-        if save_trace
+        if savetrace
             push!(trace, curr_state)
             x = copy(x)
         end
-        if norm(curr_state.∇f) < abs_tol
+        if norm(curr_state.∇f) < abstol
             converged = true
             break
         end
-        (iter == max_iter || isinf(curr_state.f)) && break
+        (iter == maxiter || isinf(curr_state.f)) && break
         iter += 1
         step!(x, alg, f, curr_state)
         curr_state = state(order(alg), f, g, h, x)
     end
-    save_trace && (metadata[:trace] = trace)
+    savetrace && (metadata[:trace] = trace)
     return Solution(converged, iter, curr_state.x, curr_state.f, metadata)
 end
 

@@ -1,6 +1,7 @@
 # Documentation: https://github.com/JuliaCI/Appveyor.jl
 environment:
   matrix:
+  - julia_version: 1.5
   - julia_version: 1
   - julia_version: nightly
 platform:
@@ -11,7 +12,7 @@ matrix:
     - julia_version: nightly
 branches:
   only:
-    - master
+    - main
     - /release-.*/
 notifications:
   - provider: Email

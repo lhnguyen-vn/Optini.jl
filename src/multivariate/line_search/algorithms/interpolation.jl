@@ -37,7 +37,7 @@ function (ils::InterpolationLineSearch)(f, state, p, α₀::T) where {T}
     αₖ = α₀
     c = ils.c
     ϵ = ils.ϵ
-    ϕ = α -> f(x + α * p)
+    ϕ(α) = f(x + α * p)
     ϕαₖ = ϕ(αₖ)
     αₖ₊₁ = T(-(dϕ₀ * αₖ^2) / (2 * (ϕαₖ - ϕ₀ - dϕ₀ * αₖ)))
     while f(x + αₖ₊₁*p) > ϕ₀ + c*αₖ₊₁*dϕ₀

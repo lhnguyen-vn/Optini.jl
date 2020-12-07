@@ -5,25 +5,25 @@
 decrease and the curvature conditions.
 
 # Fields
-- `c_1::C1`: Armijo condition constant
-- `c_2::C2`: curvature condition constant
+- `c₁::C1`: Armijo condition constant
+- `c₂::C2`: curvature condition constant
 - `scale::S`: scale factor to expand step length bracket
 - `α_max::T`: maximum step length
 """
 struct StrongWolfeLineSearch{C1, C2, S, T}
-    c_1::C1
-    c_2::C2
+    c₁::C1
+    c₂::C2
     scale::S
-    α_max::T
+    αₘₐₓ::T
 
-    function StrongWolfeLineSearch(c_1, c_2, scale, alpha_max)
-        0 < c_1 < c_2 < 1 || error("Constants must satisfy 0 < `c_1` < `c_2` < 1")
+    function StrongWolfeLineSearch(c₁, c₂, scale, αₘₐₓ)
+        0 < c₁ < c₂ < 1 || error("Constants must satisfy 0 < `c₁` < `c₂` < 1")
         scale > 1 || error("`scale` factor must be larger than 1")
-        C1 = typeof(c1)
-        C2 = typeof(c2)
+        C1 = typeof(c₁)
+        C2 = typeof(c₂)
         S = typeof(scale)
-        T = typeof(alpha_max)
-        return new{C1, C2, S, T}(c_1, c_2, scale, alpha_max)
+        T = typeof(αₘₐₓ)
+        return new{C1, C2, S, T}(c₁, c₂, scale, αₘₐₓ)
     end
 end
 
@@ -33,31 +33,31 @@ end
 Initiate `StrongWolfeLineSearch`.
 
 # Keywords
-- `c_1=1e-4`: Armijo condition constant
-- `c_2=0.9: curvature condition constant
+- `c1=1e-4`: Armijo condition constant
+- `c2=0.9: curvature condition constant
 - `scale=2.0`: scale factor to expand step length bracket
-- `alpha_max=100_000`: maximum step length
+- `alphamax=100_000`: maximum step length
 """
 function StrongWolfeLineSearch(;
-        c_1=1e-4, 
-        c_2=0.9,
+        c1=1e-4, 
+        c2=0.9,
         scale=2.0,
-        alpha_max=100_000)
-    return StrongWolfeLineSearch(c_1, c_2, scale, α_max)
+        alphamax=100_000)
+    return StrongWolfeLineSearch(c1, c2, scale, alphamax)
 end
 
 function (sw::StrongWolfeLineSearch)(f, state, p, α₀::T) where {T}
     x = state.x
     ϕ₀ = state.f
     dϕ₀ = state.∇f ⋅ p
-    c₁ = sw.c_1
-    c₂ = sw.c_2
-    ρ = T(sw.scale)
-    αₘₐₓ = T(sw.alpha_max)
+    c₁ = sw.c₁
+    c₂ = sw.c₂
+    scale = T(sw.scale)
+    αₘₐₓ = T(sw.αₘₐₓ)
     αₖ = zero(T)
     ϕαₖ = ϕ₀
-    αₖ₊₁ = sw.init(state, p)
-    ϕ = α -> f(x + α*p)
+    αₖ₊₁ = α₀
+    ϕ(α) = f(x + α*p)
     iter = 0
     while αₖ₊₁ < αₘₐₓ
         ϕαₖ₊₁ = ϕ(αₖ₊₁)
@@ -71,7 +71,7 @@ function (sw::StrongWolfeLineSearch)(f, state, p, α₀::T) where {T}
         end
         αₖ = αₖ₊₁
         ϕαₖ = ϕαₖ₊₁
-        αₖ₊₁ *= ρ
+        αₖ₊₁ *= scale
         iter += 1
     end
     return αₘₐₓ

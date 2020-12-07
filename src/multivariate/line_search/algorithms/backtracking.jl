@@ -37,7 +37,7 @@ function (bls::BacktrackingLineSearch)(f, state, p, α₀::T) where {T}
     dϕ₀ = ∇y⋅p
     c = bls.c
     scale = T(bls.scale)
-    while f(x + α₀*p) > y + c*α*dϕ₀
+    while f(x + α₀*p) > y + c*α₀*dϕ₀
         α₀ *= scale
     end
     return α₀

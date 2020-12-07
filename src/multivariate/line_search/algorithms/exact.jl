@@ -26,26 +26,26 @@ univariate algorithm.
 - `alg::UnivariateAlgorithm`: the univariate algorithm to optimize the step length
 - `step=0.01`: bracketing step size
 - `scale=2.0`: bracketing scale factor
-- `bracket_max_iter::Integer=100`: bracketing maximum number of iterations
-- `rel_tol=1e-6`: relative tolerance
-- `abs_tol=1e-12`: absolute tolerance
-- `max_iter::Integer=1_000`: maximum number of iterations
+- `bracket_maxiter::Integer=100`: bracketing maximum number of iterations
+- `reltol=1e-6`: relative tolerance
+- `abstol=1e-12`: absolute tolerance
+- `maxiter::Integer=1_000`: maximum number of iterations
 """
 function ExactLineSearch(;
         alg::UnivariateAlgorithm=GoldenSection(),
         step=0.01,
         scale=2.0,
-        bracket_max_iter::Integer=100,
-        rel_tol=1e-6,
-        abs_tol=1e-12,
-        max_iter::Integer=1_000)
-    alg_options = (; rel_tol, abs_tol, max_iter)
-    bracket_options = (; step, scale, max_iter=bracket_max_iter)
+        bracket_maxiter::Integer=100,
+        reltol=1e-6,
+        abstol=1e-12,
+        maxiter::Integer=1_000)
+    alg_options = (; reltol, abstol, maxiter)
+    bracket_options = (; step, scale, maxiter=bracket_maxiter)
     ExactLineSearch(alg, bracket_options, alg_options)
 end
 
 function (els::ExactLineSearch)(f, state, p, α₀)
-    ϕ = α -> f(state.x + α * p)
+    ϕ(α) = f(state.x + α * p)
     br = bracket(ϕ, α₀; els.bracket_options...)
     isnothing(br) && error("Initial minimum bracketing failed.")
     lower, upper = br

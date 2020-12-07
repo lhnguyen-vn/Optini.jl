@@ -17,6 +17,23 @@ struct LineSearch{D, I, M} <: MultivariateAlgorithm
     method::M
 end
 
+"""
+    LineSearch(; kwargs...)
+
+Initiate `LineSearch` algorithm.
+
+# Keywords
+- `direction=Steepest()`: determines the search direction
+- `initial=StaticInitial(1.0)`: the method to guess an initial step length
+- `method=BacktrackingLineSearch()`: the method to compute the appropriate next step
+"""
+function LineSearch(; 
+        direction=Steepest(),
+        initial=StaticInitial(),
+        method=BacktrackingLineSearch())
+    LineSearch(direction, initial, method)
+end
+
 order(ls::LineSearch) = order(ls.direction)
 
 """
@@ -32,11 +49,22 @@ const GradientDescent{I, M} = LineSearch{Steepest, I, M} where {I, M}
 Initiate `GradientDescent`.
 
 # Keywords
-- `initial`: starts line search with an initial step length guess
-- `method`: computes the appropriate next step
+- `initial=StaticInitial(0.001)`: starts line search with an initial step length guess
+- `method=StaticLineSearch()`: computes the appropriate next step
 """
 function GradientDescent(;
         initial=StaticInitial(0.001), 
         method=StaticLineSearch())
-    LineSearch(Steepest(), initial, method)
+    GradientDescent(initial, method)
 end
+
+"""
+    GradientDescent(initial, method)
+
+Initiate `GradientDescent`.
+
+# Arguments
+- `initial`: starts line search with an initial step length guess
+- `method`: computes the appropriate next step
+"""
+GradientDescent(initial, method) = LineSearch(Steepest(), initial, method)

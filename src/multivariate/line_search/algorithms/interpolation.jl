@@ -1,25 +1,20 @@
 """
-    InterpolationLineSearch{I<:AbstractInitial, C, T}
+    InterpolationLineSearch{C, T}
 
 `InterpolationLineSearch` uses quadratic and cubic interpolations to compute the step length
 satisfying the Armijo sufficient decrease condition.
 
 # Fields
-- `init::I`: the initial step length method
 - `c::C`: the constant for the Armijo condition in the open interval (0, 1)
 - `ϵ::T`: the minimum step length decrease from the initial step length
 """
-struct InterpolationLineSearch{I<:AbstractInitial, C, T} <: AbstractLineSearch
-    init::I
+struct InterpolationLineSearch{C, T}
     c::C
     ϵ::T
 
-    function InterpolationLineSearch(init, c, ϵ)
+    function InterpolationLineSearch(c, ϵ)
         0 < c < 1 || error("`c` must be in the open interval (0, 1)")
-        I = typeof(init)
-        C = typeof(c)
-        T = typeof(ϵ)
-        return new{I, C, T}(init, c, ϵ)
+        return new{typeof(c), typeof(ϵ)}(c, ϵ)
     end
 end
 
@@ -29,20 +24,17 @@ end
 Initiate `InterpolationLineSearch`.
 
 # Keywords
-- `init=StaticInitial()`: the initial step length method
 - `c=1e-4`: the constant for the Armijo condition in the open interval (0, 1)
 - `ϵ=1e-6`: the minimum step length decrease from the initial step length
 """
-function InterpolationLineSearch(; init=StaticInitial(), c=1e-4, ϵ=1e-6)
-    InterpolationLineSearch(init, c, ϵ)
-end
+InterpolationLineSearch(; c=1e-4, epsilon=1e-6) = InterpolationLineSearch(c, epsilon)
 
-function (ils::InterpolationLineSearch{<:AbstractInitial{T}})(f, state, p) where {T}
+function (ils::InterpolationLineSearch)(f, state, p, α₀::T) where {T}
     x = state.x
     ϕ₀ = state.f
     ∇y = state.∇f
     dϕ₀ = ∇y⋅p
-    αₖ = ils.init(state, p)
+    αₖ = α₀
     c = ils.c
     ϵ = ils.ϵ
     ϕ(α) = f(x + α * p)
@@ -53,10 +45,11 @@ function (ils::InterpolationLineSearch{<:AbstractInitial{T}})(f, state, p) where
         a, b = [αₖ^2 -αₖ₊₁^2; -αₖ^3 αₖ₊₁^3] * 
             [ϕαₖ₊₁ - ϕ₀ - dϕ₀*αₖ₊₁; ϕαₖ - ϕ₀ - dϕ₀*αₖ] / 
             (αₖ^2*αₖ₊₁^2*(αₖ₊₁-αₖ))
-        α₂ = (-b + sqrt(b^2 - 3a*dϕ₀)) / (3a)
-        α₂ = max(min(α₂, αₖ₊₁ - ϵ), αₖ₊₁/2)
+        αₖ₊₂ = (-b + sqrt(b^2 - 3a*dϕ₀)) / (3a)
+        αₖ₊₂ = max(min(αₖ₊₂, αₖ₊₁ - ϵ), αₖ₊₁/2)
         αₖ = αₖ₊₁
-        αₖ₊₁ = T(α₂)
+        ϕαₖ = ϕαₖ₊₁
+        αₖ₊₁ = T(αₖ₊₂)
     end
     return αₖ₊₁
 end

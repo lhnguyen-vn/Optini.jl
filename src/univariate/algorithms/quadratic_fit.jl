@@ -22,7 +22,7 @@ Initialize quadratic fit search algorithm with optional argument `ϵ` in the int
 QuadraticFit(ϵ=0.5) = QuadraticFit{typeof(ϵ)}(ϵ)
 
 function _optimize(f, lower::T, upper::T, alg::QuadraticFit; 
-        rel_tol, abs_tol, max_iter) where {T}
+        reltol, abstol, maxiter) where {T}
     ϵ = alg.ϵ
     mid = T(ϵ * lower + (1 - ϵ) * upper)
     y_lower, y_upper, y_mid = f(lower), f(upper), f(mid)
@@ -30,13 +30,13 @@ function _optimize(f, lower::T, upper::T, alg::QuadraticFit;
     iter = 0
     x = T(NaN)
     yx = (typeof(y_lower))(NaN)
-    while iter < max_iter
+    while iter < maxiter
         iter += 1
         x = T(0.5 * (y_lower * (mid^2 - upper^2) + y_mid * (upper^2 - lower^2) + 
             y_upper * (lower^2 - mid^2)) /
             (y_lower * (mid - upper) + y_mid * (upper - lower) + y_upper * (lower - mid)))
         yx = f(x)
-        x_tol = rel_tol * abs(x) + abs_tol
+        x_tol = reltol * abs(x) + abstol
         if max(upper - x, x - lower) < 2x_tol
             converged = true
             break

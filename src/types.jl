@@ -20,20 +20,6 @@ Abstract supertype of multivariate optimization algorithms.
 abstract type MultivariateAlgorithm <: AbstractAlgorithm end
 
 """
-    FirstOrderAlgorithm
-
-Abstract supertype of multivariate optimization algorithms requiring first-order knowledge.
-"""
-abstract type FirstOrderAlgorithm <: MultivariateAlgorithm end
-
-"""
-    SecondOrderAlgorithm
-
-Abstract supertype of multivariate optimization algorithms requiring second-order knowledge.
-"""
-abstract type SecondOrderAlgorithm <: MultivariateAlgorithm end
-
-"""
     Solution{Tx, Tf}
 
 Solution type for optimization models. 

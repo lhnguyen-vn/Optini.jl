@@ -8,19 +8,19 @@ Fibonacci sequence.
 struct GoldenSection <: UnivariateAlgorithm end
 
 function _optimize(f, lower::T, upper::T, alg::GoldenSection; 
-        rel_tol, abs_tol, max_iter) where {T}
+        reltol, abstol, maxiter) where {T}
     p = φ - 1
     x = T(p * lower + (1 - p) * upper)
     yx = f(x)
     converged = false
     iter = 1
     while true
-        x_tol = rel_tol * abs(x) + abs_tol
+        x_tol = reltol * abs(x) + abstol
         if abs(upper - lower) < 2x_tol
             converged = true
             break
         end
-        iter == max_iter && break
+        iter == maxiter && break
         iter += 1
         new_x = T(p * upper + (1 - p) * lower)
         new_yx = f(new_x)

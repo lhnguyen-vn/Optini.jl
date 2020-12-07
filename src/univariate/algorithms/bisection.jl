@@ -7,10 +7,9 @@ critical point is located or the bracket is sufficiently small.
 """
 struct Bisection <: UnivariateAlgorithm end
 
-function _optimize(f, lower::T, upper::T, alg::Bisection; 
-        rel_tol, abs_tol, max_iter) where {T}
-    f′(x) = Zygote.gradient(f, x)[1]
-    y_lower, y_upper = f′(lower), f′(upper)
+function _optimize(f, g, lower::T, upper::T, alg::Bisection; 
+        reltol, abstol, maxiter) where {T}
+    y_lower, y_upper = g(lower), g(upper)
     sign(y_lower) == sign(y_upper) && 
         error("Bisection requires initial bracket with different derivative signs.")
     y_lower == 0 && (upper = lower)
@@ -18,11 +17,11 @@ function _optimize(f, lower::T, upper::T, alg::Bisection;
     x = T(NaN)
     converged = false
     iter = 0
-    while iter < max_iter
+    while iter < maxiter
         iter += 1
         x = (lower + upper) / 2
-        x_tol = rel_tol * abs(x) + abs_tol
-        y = f′(x)
+        x_tol = reltol * abs(x) + abstol
+        y = g(x)
         if upper - lower < 2x_tol || y == 0
             converged = true
             break
@@ -34,4 +33,9 @@ function _optimize(f, lower::T, upper::T, alg::Bisection;
         end
     end
     return Solution(converged, iter, x, f(x))
+end
+
+function _optimize(f, lower, upper, alg::Bisection; kwargs...)
+    g(x) = Zygote.gradient(f, x)[1]
+    _optimize(f, g, lower, upper, alg; kwargs...)
 end

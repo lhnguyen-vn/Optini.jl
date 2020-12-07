@@ -22,23 +22,23 @@ Wheeler's "Algorithms for Optimization" for more information.
 Fibonacci(ϵ=0.01) = Fibonacci{typeof(ϵ)}(ϵ)
 
 function _optimize(f, lower::T, upper::T, alg::Fibonacci; 
-        rel_tol, abs_tol, max_iter) where {T}
+        reltol, abstol, maxiter) where {T}
     ϵ = T(alg.ϵ)
     s = (1 - √5) / (1 + √5)
-    p = 1 / (φ * (1 - s^(max_iter + 1)) / (1 - s^max_iter))
+    p = 1 / (φ * (1 - s^(maxiter + 1)) / (1 - s^maxiter))
     x = T(p * lower + (1 - p) * upper)
     yx = f(x)
     converged = false
     iter = 1
     while true
-        x_tol = rel_tol * abs(x) + abs_tol
+        x_tol = reltol * abs(x) + abstol
         if abs(upper - lower) < 2x_tol
             converged = true
             break
         end
-        iter == max_iter && break
+        iter == maxiter && break
         iter += 1
-        if iter == max_iter
+        if iter == maxiter
             new_x = T(ϵ * upper + (1 - ϵ) * x)
         else
             new_x = T(p * upper + (1 - p) * lower)
@@ -49,7 +49,7 @@ function _optimize(f, lower::T, upper::T, alg::Fibonacci;
         else
             lower, upper = new_x, lower
         end
-        p = 1 / (φ * (1 - s^(max_iter - iter + 2)) / (1 - s^(max_iter - iter + 1)))
+        p = 1 / (φ * (1 - s^(maxiter - iter + 2)) / (1 - s^(maxiter - iter + 1)))
     end
     return Solution(converged, iter, x, yx)
 end

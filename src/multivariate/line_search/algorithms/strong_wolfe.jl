@@ -62,12 +62,12 @@ function (sw::StrongWolfeLineSearch)(f, state, p, α₀::T) where {T}
     while αₖ₊₁ < αₘₐₓ
         ϕαₖ₊₁ = ϕ(αₖ₊₁)
         if ϕαₖ₊₁ > ϕ₀ + c₁*αₖ₊₁*dϕ₀ || (ϕαₖ₊₁ ≥ ϕαₖ && iter > 1)
-            return zoom(ϕ, αₖ, αₖ₊₁, ϕ₀, dϕ₀, ϕαₖ, c₁, c₂)
+            return _zoom(ϕ, αₖ, αₖ₊₁, ϕ₀, dϕ₀, ϕαₖ, c₁, c₂)
         end
         dϕαₖ₊₁ = Zygote.gradient(ϕ, αₖ₊₁)[1]
         abs(dϕαₖ₊₁) ≤ -c₂*dϕ₀ && return αₖ₊₁
         if dϕαₖ₊₁ ≥ 0
-            return zoom(ϕ, αₖ₊₁, αₖ, ϕ₀, dϕ₀, ϕαₖ₊₁, c₁, c₂)
+            return _zoom(ϕ, αₖ₊₁, αₖ, ϕ₀, dϕ₀, ϕαₖ₊₁, c₁, c₂)
         end
         αₖ = αₖ₊₁
         ϕαₖ = ϕαₖ₊₁
@@ -77,7 +77,7 @@ function (sw::StrongWolfeLineSearch)(f, state, p, α₀::T) where {T}
     return αₘₐₓ
 end
 
-function zoom(ϕ, αₗₒ, αₕᵢ, ϕ₀, dϕ₀, ϕαₗₒ, c₁, c₂)
+function _zoom(ϕ, αₗₒ, αₕᵢ, ϕ₀, dϕ₀, ϕαₗₒ, c₁, c₂)
     while true
         α = (αₗₒ + αₕᵢ) / 2
         ϕα = ϕ(α)

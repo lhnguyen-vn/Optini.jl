@@ -2,7 +2,7 @@ abstract type AbstractOrder end
 
 struct FirstOrder <: AbstractOrder end
 
-struct SecondOrder <: SecondOrder end
+struct SecondOrder <: AbstractOrder end
 
 struct FirstOrderState{Tx, Tf}
     x::Tx

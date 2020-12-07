@@ -1,7 +1,7 @@
 let
-    f(x) = (x[1] - 1)^2 + 2(x[2] - 1)^2
-    g(x) = Zygote.gradient(f, x)[1]
-    x = [0.0, 0.0]
+    f(x) = x⋅x
+    g(x) = 2x
+    x = [1.0, -1.0]
     state = Optini.FirstOrderState(x, f(x), g(x))
     p = -state.∇f
 
@@ -19,10 +19,10 @@ let
             Optini.update!(init, state, p, 0.1f0)
         end
 
-        next_x = [0.2, 0.4]
+        next_x = [0.8, -0.8]
         next_state = Optini.FirstOrderState(next_x, f(next_x), g(next_x))
         next_p = -next_state.∇f
-        steps = [1f0, 0.24038461f0, 0.39817306f0] # expected initial step lengths
+        steps = [1f0, 0.15625f0, 0.2840625f0] # expected initial step lengths
 
         for (init, step) in zip(inits, steps)
             α = init(next_state, next_p)
@@ -31,24 +31,32 @@ let
         end
     end
 
-    @testset "Line Search Algorithms" begin
-        init = StaticInitial(1f0)
-        α = init(state, p)
-
+    @testset "Line Search Methods" begin
         linesearches = [
             StaticLineSearch(),
-            ExactLineSearch(),
+            ExactLineSearch(reltol=1e-7),
             BacktrackingLineSearch(),
             InterpolationLineSearch(),
             StrongWolfeLineSearch()
         ]
 
-        steps = [1f0, 0.2777777f0, 0.5f0, 0.2777778f0, 0.5f0]
-
-        for (ls, step) in zip(linesearches, steps)
-            α = ls(f, state, p, α)
+        for (iter, ls) in enumerate(linesearches)
+            α = ls(f, state, p, 1f0)
             @test typeof(α) == Float32 # type stability
-            @test α == step # check step length
+            if iter == 1
+                @test α == 1f0 # check step length
+            else
+                @test α == 0.5f0 # check step length
+            end
+        end
+    end
+
+    @testset "Line Search Algorithms" begin
+        directions = [Steepest(), Newton()]
+        methods = [InterpolationLineSearch(), StrongWolfeLineSearch()]
+
+        for direction in directions, method in methods
+            ls = LineSearch()
         end
     end
 end

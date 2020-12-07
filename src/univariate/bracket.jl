@@ -1,4 +1,4 @@
-function _bracket(f, x, step, scale, max_iter)
+function _bracket(f, x, step, scale, maxiter)
     a, ya = x, f(x)
     b, yb = a + step, f(a + step)
     if yb > ya
@@ -7,7 +7,7 @@ function _bracket(f, x, step, scale, max_iter)
         step = -step
     end
     iter = 0
-    while iter < max_iter
+    while iter < maxiter
         iter += 1
         c, yc = b + step, f(b + step)
         if yc > yb
@@ -28,9 +28,9 @@ tuple if successful, and `nothing` otherwise.
 # Keywords
 - `step=0.01`: the step size to expand the bracket
 - `scale=2.0`: the scale factor for step size at each iteration
-- `max_iter::Integer=100`: the maximum number of iterations
+- `maxiter::Integer=100`: the maximum number of iterations
 """
 function bracket(f::Function, x::T=0.0; 
-        step=0.01, scale=2.0, max_iter::Integer=100) where {T<:AbstractFloat}
-    _bracket(f, x, T(step), T(scale), max_iter)
+        step=0.01, scale=2.0, maxiter::Integer=100) where {T<:AbstractFloat}
+    _bracket(f, x, T(step), T(scale), maxiter)
 end

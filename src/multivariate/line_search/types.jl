@@ -50,11 +50,11 @@ Initiate `GradientDescent`.
 
 # Keywords
 - `initial=StaticInitial(0.001)`: starts line search with an initial step length guess
-- `method=StaticLineSearch()`: computes the appropriate next step
+- `method=BacktrackingLineSearch()`: computes the appropriate next step
 """
 function GradientDescent(;
         initial=StaticInitial(0.001), 
-        method=StaticLineSearch())
+        method=BacktrackingLineSearch())
     GradientDescent(initial, method)
 end
 
@@ -68,3 +68,36 @@ Initiate `GradientDescent`.
 - `method`: computes the appropriate next step
 """
 GradientDescent(initial, method) = LineSearch(Steepest(), initial, method)
+
+"""
+    NewtonDescent{I, M}
+
+Aliasing `LineSearch` with Newton method.
+"""
+const NewtonDescent{I, M} = LineSearch{Newton, I, M} where {I, M}
+
+"""
+    NewtonDescent(; kwargs...)
+
+Initiate `NewtonDescent`.
+
+# Keywords
+- `initial=QuadraticInitial(0.001)`: starts line search with an initial step length guess
+- `method=BacktrackingLineSearch()`: computes the appropriate next step
+"""
+function NewtonDescent(;
+        initial=QuadraticInitial(0.001), 
+        method=BacktrackingLineSearch())
+    NewtonDescent(initial, method)
+end
+
+"""
+    NewtonDescent(initial, method)
+
+Initiate `NewtonDescent`.
+
+# Arguments
+- `initial`: starts line search with an initial step length guess
+- `method`: computes the appropriate next step
+"""
+NewtonDescent(initial, method) = LineSearch(Newton(), initial, method)

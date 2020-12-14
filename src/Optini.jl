@@ -48,7 +48,7 @@ export Newton
 export StaticInitial, PreviousDecreaseInitial, QuadraticInitial
 export StaticLineSearch, ExactLineSearch, BacktrackingLineSearch, InterpolationLineSearch,
     StrongWolfeLineSearch
-export LineSearch, GradientDescent
+export LineSearch, GradientDescent, NewtonDescent
 
 export CauchyPoint, Dogleg, TwoDimSubspace
 export TrustRegion

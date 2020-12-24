@@ -33,3 +33,11 @@ struct Solution{Tx, Tf, M}
 end
 
 Solution(converged, iter, minimizer, minimum) = Solution(converged, iter, minimizer, minimum, Dict())
+
+function Base.show(io::IO, sol::Solution)
+    println(io, "Solution Summary:")
+    println(io, "  • Converged: ", sol.converged)
+    println(io, "  • Total Iterations: ", sol.iter)
+    println(io, "  • Minimizer: ", sol.minimizer)
+    print(io, "  • Minimum: ", sol.minimum)
+end

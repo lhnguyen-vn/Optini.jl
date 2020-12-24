@@ -9,8 +9,12 @@ the objective function and uses the model to choose the next step.
 - `method::M`: the method to compute the appropriate next step
 - `Δ₀::D`: the initial radius
 - `Δₘₐₓ::D`: the maximum radius
-- `Δ::R`: a `Ref` containing the current radius
 - `η::E`: the threshold to control when `TrustRegion` will take a step
+- `ηₛ::E`: the threshold to control when `TrustRegion` shrinks the current radius
+- `ηₑ::E`: the threshold to control when `TrustRegion` expands the current radius
+- `σₛ::S`: the factor used to shrink the trust region radius
+- `σₑ::S`: the factor used to expand the trust region radius
+- `Δ::R`: a `Ref` containing the current radius
 """
 struct TrustRegion{H, M, D, E, S, R} <: MultivariateAlgorithm
     hessian::H

@@ -6,9 +6,9 @@ end
 function step!(x, alg::TrustRegion, f::Function, state)
     Δ = alg.Δ[]
     Δₘₐₓ = alg.Δₘₐₓ
-    η₁ = alg.η₁
-    η₂ = alg.η₂
-    η₃ = alg.η₃
+    η = alg.η
+    ηₛ = alg.ηₛ
+    ηₑ = alg.ηₑ
     fx = state.f
     ∇fx = state.∇f
     B = approx_hessian(alg.hessian, state)
@@ -17,14 +17,14 @@ function step!(x, alg::TrustRegion, f::Function, state)
     ρ = (fx - f(x + p)) / (model(zero(p)) - model(p))
     
     # Update radius
-    if ρ ≥ η₃ && norm(p) ≈ Δ # highly successful
+    if ρ ≥ ηₑ && norm(p) ≈ Δ # highly successful
         alg.Δ[] = min(alg.σₑ*Δ, Δₘₐₓ)
-    elseif ρ < η₂
+    elseif ρ < ηₛ
         alg.Δ[] = alg.σₛ*Δ
     end
 
     # Apply step
-    if ρ ≥ η₁
+    if ρ ≥ η
         x .+= p
     end
 

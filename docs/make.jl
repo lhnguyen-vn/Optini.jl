@@ -16,6 +16,14 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "Manual" => [
+            "Univariate" => "man/univariate.md",
+            "Multivariate" => [
+                "man/multivariate/linesearch.md",
+                "man/multivariate/trustregion.md"
+            ]
+        ],
+        "tutorials.md"
     ],
 )
 

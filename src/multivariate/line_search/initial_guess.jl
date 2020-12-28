@@ -15,7 +15,7 @@ struct StaticInitial{T} <: AbstractInitial{T}
     StaticInitial(α=1.0) = new{typeof(α)}(α)
 end
 
-(si::StaticInitial)(state, p) = fi.α
+(si::StaticInitial)(state, p) = si.α
 
 """
     PreviousDecreaseInitial{T, D<:Ref} <: AbstractInitial{T}

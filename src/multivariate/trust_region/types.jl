@@ -77,4 +77,17 @@ function TrustRegion(;
         S(shrinkfactor), S(expandfactor))
 end
 
+function Base.show(io::IO, tr::TrustRegion)
+    println(io, "Trust Region Algorithm:")
+    println(io, "  • Hessian approximation method: ", tr.hessian)
+    println(io, "  • Subproblem optimization method: ", tr.method)
+    println(io, "  • Initial trust region radius: ", tr.Δ₀)
+    println(io, "  • Maximum trust region radius: ", tr.Δₘₐₓ)
+    println(io, "  • Step threshold: ", tr.η)
+    println(io, "  • Trust region shrinkage threshold: ", tr.ηₛ)
+    println(io, "  • Trust region expansion threshold: ", tr.ηₑ)
+    println(io, "  • Trust region shrinkage factor: ", tr.σₛ)
+    print(io, "  • trust region expansion factor: ", tr.σₑ)
+end
+
 order(tr::TrustRegion) = order(tr.hessian)

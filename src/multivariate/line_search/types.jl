@@ -34,6 +34,13 @@ function LineSearch(;
     LineSearch(direction, initial, method)
 end
 
+function Base.show(io::IO, ls::LineSearch)
+    println(io, "Line Search Algorithm:")
+    println(io, "  • Direction: ", ls.direction)
+    println(io, "  • Initial step length guess: ", ls.initial)
+    print(io, "  • Step length optimization method: ", ls.method)
+end
+
 order(ls::LineSearch) = order(ls.direction)
 
 """
